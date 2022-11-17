@@ -47,6 +47,10 @@ func main() {
 		ext := splitDots[len(splitDots)-1]
 		fmt.Printf("Extension : %s \n", ext)
 
+		if !IsValidExt(ext) {
+			return c.Status(http.StatusInternalServerError).JSON(fiber.Map{"message": "Tipe file tidak di support"})
+		}
+
 		namaFile := fmt.Sprintf("%s.%s", time.Now().Format("2006-01-02-15-04-05"), ext)
 		fmt.Printf("Nama file baru : %s \n", namaFile)
 
@@ -81,4 +85,15 @@ func main() {
 	})
 
 	log.Fatal(app.Listen(":3000"))
+}
+
+func IsValidExt(ext string) bool {
+	switch ext {
+	case
+		"png",
+		"jpg",
+		"jpeg":
+		return true
+	}
+	return false
 }
